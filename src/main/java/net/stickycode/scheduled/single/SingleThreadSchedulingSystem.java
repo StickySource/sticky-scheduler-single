@@ -10,43 +10,47 @@
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the Apache License Version 2.0 for the specific language governing permissions and limitations there under.
  */
-package net.stickycode.scheduled;
+package net.stickycode.scheduled.single;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
 import javax.annotation.PreDestroy;
+import javax.inject.Inject;
+
+import net.stickycode.scheduled.Schedule;
+import net.stickycode.scheduled.ScheduledRunnable;
+import net.stickycode.scheduled.ScheduledRunnableRepository;
+import net.stickycode.scheduled.SchedulingSystem;
+import net.stickycode.stereotype.Configured;
+import net.stickycode.stereotype.PostConfigured;
+import net.stickycode.stereotype.StickyComponent;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import net.stickycode.stereotype.PostConfigured;
-import net.stickycode.stereotype.StickyComponent;
 
 @StickyComponent
 public class SingleThreadSchedulingSystem
     implements SchedulingSystem {
 
-private Logger log = LoggerFactory.getLogger(SingleThreadSchedulingSystem.class);
+  private Logger log = LoggerFactory.getLogger(SingleThreadSchedulingSystem.class);
 
   private ScheduledExecutorService executor = Executors.newSingleThreadScheduledExecutor(new NamedThreadFactory("sticky"));
 
-  private List<ScheduledRunnable> schedules = new ArrayList<ScheduledRunnable>();
+  @Inject
+  private ScheduledRunnableRepository schedules;
 
-  @Override
-  public void schedule(ScheduledRunnable runnable) {
-    schedules.add(runnable);
-  }
+  @Configured
+  private Integer shutdownTimeoutInSeconds = 5;
 
   @PostConfigured
   public void start() {
     log.info("starting schedules");
-    for (ScheduledRunnable runnable: schedules) {
+    for (ScheduledRunnable runnable : schedules) {
       Schedule s = runnable.getSchedule();
-      log.debug("scheduling {}", runnable);
+      log.debug("scheduling {} at {}", runnable, s);
       executor.scheduleAtFixedRate(runnable, s.getInitialDelay(), s.getPeriod(), TimeUnit.SECONDS);
     }
   }
@@ -56,7 +60,7 @@ private Logger log = LoggerFactory.getLogger(SingleThreadSchedulingSystem.class)
     log.info("stopping schedules");
     try {
       executor.shutdown();
-      if (!executor.awaitTermination(5, TimeUnit.SECONDS))
+      if (!executor.awaitTermination(shutdownTimeoutInSeconds, TimeUnit.SECONDS))
         forceShutdown();
     }
     catch (InterruptedException e) {
