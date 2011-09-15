@@ -50,8 +50,8 @@ public class SingleThreadSchedulingSystem
     log.info("starting schedules");
     for (ScheduledRunnable runnable : schedules) {
       Schedule s = runnable.getSchedule();
-      log.debug("scheduling {} at {}", runnable, s);
-      executor.scheduleAtFixedRate(runnable, s.getInitialDelay(), s.getPeriod(), TimeUnit.SECONDS);
+      log.debug("scheduling {} {}",runnable, s); 
+      executor.scheduleAtFixedRate(runnable, s.getInitialDelay(), s.getPeriod(), s.getUnits());
     }
   }
 

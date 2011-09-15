@@ -18,6 +18,7 @@ import static org.mockito.Mockito.when;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import net.stickycode.scheduled.Schedule;
 import net.stickycode.scheduled.ScheduledRunnable;
@@ -43,13 +44,29 @@ public class SchedulingSystemTest {
 
     @Override
     public Schedule getSchedule() {
-      return new Schedule(0, 1);
+      return new Schedule() {
+
+        @Override
+        public TimeUnit getUnits() {
+          return TimeUnit.SECONDS;
+        }
+
+        @Override
+        public long getPeriod() {
+          return 1;
+        }
+
+        @Override
+        public long getInitialDelay() {
+          return 0;
+        }
+      };
     }
   }
-  
+
   @Mock
   ScheduledRunnableRepository repository;
-  
+
   @InjectMocks
   SingleThreadSchedulingSystem system = new SingleThreadSchedulingSystem();
 
