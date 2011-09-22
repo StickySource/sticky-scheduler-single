@@ -19,11 +19,11 @@
 	<inceptionYear>2008</inceptionYear>
 	<dependencies>
 		<dependency>
-			<groupId>net.stickycode.scheduled</groupId>
-			<artifactId>sticky-scheduled-api</artifactId>
-			<version>[1,2)</version>
+			<groupId>net.stickycode.composite</groupId>
+			<artifactId>sticky-composite-unittest</artifactId>
+			<version>[1.7,2)</version>
+			<scope>test</scope>
 		</dependency>
-
 		<dependency>
 			<groupId>net.stickycode.configured</groupId>
 			<artifactId>sticky-configured</artifactId>
@@ -33,9 +33,19 @@
 
 		<dependency>
 			<groupId>net.stickycode.composite</groupId>
-			<artifactId>sticky-composite-unittest</artifactId>
-			<version>[1.7,2)</version>
-			<scope>test</scope>
+			<artifactId>sticky-composite-logging-api</artifactId>
+			<version>[1.2,2)</version>
 		</dependency>
+		<dependency>
+			<groupId>net.stickycode</groupId>
+			<artifactId>sticky-stereotype</artifactId>
+			<version>[1.8,2)</version>
+		</dependency>
+		<dependency>
+			<groupId>net.stickycode.scheduled</groupId>
+			<artifactId>sticky-scheduled-api</artifactId>
+			<version>[1,2)</version>
+		</dependency>
+
 	</dependencies>
 </project>
