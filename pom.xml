@@ -28,6 +28,7 @@
 			<groupId>net.stickycode.configured</groupId>
 			<artifactId>sticky-configured</artifactId>
 			<version>[2,3)</version>
+			<scope>test</scope>
 		</dependency>
 
 		<dependency>
