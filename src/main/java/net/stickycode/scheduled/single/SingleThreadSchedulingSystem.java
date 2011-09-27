@@ -42,7 +42,7 @@ public class SingleThreadSchedulingSystem
   @Inject
   private ScheduledRunnableRepository schedules;
 
-  @Configured
+//  @Configured
   private Integer shutdownTimeoutInSeconds = 5;
 
   @PostConfigured
