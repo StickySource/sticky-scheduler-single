@@ -24,7 +24,6 @@ import net.stickycode.scheduled.Schedule;
 import net.stickycode.scheduled.ScheduledRunnable;
 import net.stickycode.scheduled.ScheduledRunnableRepository;
 import net.stickycode.scheduled.SchedulingSystem;
-import net.stickycode.stereotype.Configured;
 import net.stickycode.stereotype.PostConfigured;
 import net.stickycode.stereotype.StickyComponent;
 
