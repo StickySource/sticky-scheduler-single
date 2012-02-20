@@ -13,7 +13,6 @@
 package net.stickycode.scheduled.single;
 
 import java.util.List;
-import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
@@ -24,6 +23,7 @@ import net.stickycode.scheduled.Schedule;
 import net.stickycode.scheduled.ScheduledRunnable;
 import net.stickycode.scheduled.ScheduledRunnableRepository;
 import net.stickycode.scheduled.SchedulingSystem;
+import net.stickycode.stereotype.Configured;
 import net.stickycode.stereotype.PostConfigured;
 import net.stickycode.stereotype.StickyComponent;
 
@@ -36,16 +36,21 @@ public class SingleThreadSchedulingSystem
 
   private Logger log = LoggerFactory.getLogger(SingleThreadSchedulingSystem.class);
 
-  private ScheduledExecutorService executor = Executors.newSingleThreadScheduledExecutor(new NamedThreadFactory("sticky"));
+  private ScheduledExecutorService executor;
 
   @Inject
   private ScheduledRunnableRepository schedules;
 
-//  @Configured
+  @Configured
   private Integer shutdownTimeoutInSeconds = 5;
+  
+  @Configured
+  private Integer maximumThreads = 3;
 
   @PostConfigured
   public void start() {
+    executor = new StickyThreadPoolExcutor(maximumThreads);
+    
     log.info("starting schedules");
     for (ScheduledRunnable runnable : schedules) {
       Schedule s = runnable.getSchedule();
