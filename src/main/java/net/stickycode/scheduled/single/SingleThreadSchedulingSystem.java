@@ -54,8 +54,14 @@ public class SingleThreadSchedulingSystem
     log.info("starting schedules");
     for (ScheduledRunnable runnable : schedules) {
       Schedule s = runnable.getSchedule();
-      log.debug("scheduling {} {}",runnable, s); 
-      executor.scheduleAtFixedRate(runnable, s.getInitialDelay(), s.getPeriod(), s.getUnits());
+      if (s.isEnabled()) {
+        log.debug("scheduling {} {}",runnable, s); 
+        executor.scheduleAtFixedRate(runnable, s.getInitialDelay(), s.getPeriod(), s.getUnits());
+      }
+      else {
+        log.info("not scheduling {} as it is disabled");
+      }
+        
     }
   }
 

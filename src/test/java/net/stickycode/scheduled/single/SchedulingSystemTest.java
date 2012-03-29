@@ -60,6 +60,11 @@ public class SchedulingSystemTest {
         public long getInitialDelay() {
           return 0;
         }
+
+        @Override
+        public boolean isEnabled() {
+          return true;
+        }
       };
     }
   }
