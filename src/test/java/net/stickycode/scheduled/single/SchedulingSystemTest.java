@@ -73,7 +73,7 @@ public class SchedulingSystemTest {
   ScheduledRunnableRepository repository;
 
   @InjectMocks
-  SingleThreadSchedulingSystem system = new SingleThreadSchedulingSystem();
+  SingleThreadPoolSchedulingSystem system = new SingleThreadPoolSchedulingSystem();
 
   @Test
   public void runit()

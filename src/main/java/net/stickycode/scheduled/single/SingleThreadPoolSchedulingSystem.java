@@ -13,6 +13,8 @@
 package net.stickycode.scheduled.single;
 
 import java.util.List;
+import java.util.concurrent.Callable;
+import java.util.concurrent.Future;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
@@ -22,7 +24,7 @@ import javax.inject.Inject;
 import net.stickycode.scheduled.Schedule;
 import net.stickycode.scheduled.ScheduledRunnable;
 import net.stickycode.scheduled.ScheduledRunnableRepository;
-import net.stickycode.scheduled.SchedulingSystem;
+import net.stickycode.scheduler.BackgroundExecutor;
 import net.stickycode.stereotype.Configured;
 import net.stickycode.stereotype.PostConfigured;
 import net.stickycode.stereotype.StickyComponent;
@@ -31,10 +33,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 @StickyComponent
-public class SingleThreadSchedulingSystem
-    implements SchedulingSystem {
+public class SingleThreadPoolSchedulingSystem 
+  implements BackgroundExecutor {
 
-  private Logger log = LoggerFactory.getLogger(SingleThreadSchedulingSystem.class);
+  private Logger log = LoggerFactory.getLogger(SingleThreadPoolSchedulingSystem.class);
 
   private ScheduledExecutorService executor;
 
@@ -61,7 +63,6 @@ public class SingleThreadSchedulingSystem
       else {
         log.info("not scheduling {} as it is disabled");
       }
-        
     }
   }
 
@@ -82,4 +83,17 @@ public class SingleThreadSchedulingSystem
     List<Runnable> leftovers = executor.shutdownNow();
     log.error("Failed to shutdown {} tasks on shutdown {}", leftovers.size(), leftovers);
   }
+
+  @Override
+  public void execute(Runnable job) {
+    log.info("execute {} in background", job);
+    executor.execute(job);
+  }
+
+  @Override
+  public <T> Future<T> submit(Callable<T> task) {
+    log.info("execute {} in background", task);
+    return executor.submit(task);
+  }
+
 }

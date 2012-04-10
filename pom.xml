@@ -27,7 +27,7 @@
 		<dependency>
 			<groupId>net.stickycode.configured</groupId>
 			<artifactId>sticky-configured</artifactId>
-			<version>[4.5,5)</version>
+			<version>[4.7,5)</version>
 			<scope>test</scope>
 		</dependency>
 
@@ -52,6 +52,11 @@
 			<artifactId>sticky-composite-logging-deploy</artifactId>
 			<version>1.4</version>
 			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>net.stickycode.scheduled</groupId>
+			<artifactId>sticky-scheduler-api</artifactId>
+			<version>[1,2)</version>
 		</dependency>
 	</dependencies>
 </project>
