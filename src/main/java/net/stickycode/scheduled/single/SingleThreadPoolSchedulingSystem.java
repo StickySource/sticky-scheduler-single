@@ -69,6 +69,11 @@ public class SingleThreadPoolSchedulingSystem
   @PreDestroy
   public void stop() {
     log.info("stopping schedules");
+    if (executor != null)
+      stopping();
+  }
+
+  private void stopping() {
     try {
       executor.shutdown();
       if (!executor.awaitTermination(shutdownTimeoutInSeconds, TimeUnit.SECONDS))
