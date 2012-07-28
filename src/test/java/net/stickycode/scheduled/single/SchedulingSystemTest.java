@@ -20,6 +20,11 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
+import net.stickycode.bootstrap.ComponentContainer;
+import net.stickycode.coercion.CoercionFinder;
+import net.stickycode.coercion.CoercionTarget;
+import net.stickycode.configuration.ResolvedConfiguration;
+import net.stickycode.configured.ConfigurationMetadataProcessor;
 import net.stickycode.scheduled.Schedule;
 import net.stickycode.scheduled.ScheduledRunnable;
 import net.stickycode.scheduled.ScheduledRunnableRepository;
@@ -66,6 +71,51 @@ public class SchedulingSystemTest {
           return true;
         }
       };
+    }
+
+    @Override
+    public void applyCoercion(CoercionFinder coercions) {
+    }
+
+    @Override
+    public void update() {
+    }
+
+    @Override
+    public void invertControl(ComponentContainer container) {
+    }
+
+    @Override
+    public void recurse(ConfigurationMetadataProcessor processor) {
+    }
+
+    @Override
+    public boolean requiresResolution() {
+      return false;
+    }
+
+    @Override
+    public ResolvedConfiguration getResolution() {
+      return null;
+    }
+
+    @Override
+    public Object getTarget() {
+      return null;
+    }
+
+    @Override
+    public void resolvedWith(ResolvedConfiguration resolved) {
+    }
+
+    @Override
+    public CoercionTarget getCoercionTarget() {
+      return null;
+    }
+
+    @Override
+    public String join(String delimeter) {
+      return null;
     }
   }
 
