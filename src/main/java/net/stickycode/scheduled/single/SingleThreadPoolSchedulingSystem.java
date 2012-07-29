@@ -25,9 +25,9 @@ import net.stickycode.scheduled.Schedule;
 import net.stickycode.scheduled.ScheduledRunnable;
 import net.stickycode.scheduled.ScheduledRunnableRepository;
 import net.stickycode.scheduler.BackgroundExecutor;
-import net.stickycode.stereotype.Configured;
-import net.stickycode.stereotype.PostConfigured;
 import net.stickycode.stereotype.StickyComponent;
+import net.stickycode.stereotype.configured.Configured;
+import net.stickycode.stereotype.configured.PostConfigured;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
