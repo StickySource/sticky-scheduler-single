@@ -24,7 +24,6 @@ import net.stickycode.bootstrap.ComponentContainer;
 import net.stickycode.coercion.CoercionFinder;
 import net.stickycode.coercion.CoercionTarget;
 import net.stickycode.configuration.ResolvedConfiguration;
-import net.stickycode.configured.ConfigurationMetadataProcessor;
 import net.stickycode.scheduled.Schedule;
 import net.stickycode.scheduled.ScheduledRunnable;
 import net.stickycode.scheduled.ScheduledRunnableRepository;
@@ -83,10 +82,6 @@ public class SchedulingSystemTest {
 
     @Override
     public void invertControl(ComponentContainer container) {
-    }
-
-    @Override
-    public void recurse(ConfigurationMetadataProcessor processor) {
     }
 
     @Override
