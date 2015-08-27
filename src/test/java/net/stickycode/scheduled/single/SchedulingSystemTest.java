@@ -12,14 +12,18 @@
  */
 package net.stickycode.scheduled.single;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Mockito.when;
+import static org.assertj.core.api.StrictAssertions.assertThat;
 
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
+import org.junit.Test;
+
+import mockit.Expectations;
+import mockit.Injectable;
+import mockit.Tested;
 import net.stickycode.bootstrap.ComponentContainer;
 import net.stickycode.coercion.CoercionFinder;
 import net.stickycode.coercion.CoercionTarget;
@@ -28,13 +32,6 @@ import net.stickycode.scheduled.Schedule;
 import net.stickycode.scheduled.ScheduledRunnable;
 import net.stickycode.scheduled.ScheduledRunnableRepository;
 
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.runners.MockitoJUnitRunner;
-
-@RunWith(MockitoJUnitRunner.class)
 public class SchedulingSystemTest {
 
   public static class ScheduleTestObject
@@ -42,6 +39,7 @@ public class SchedulingSystemTest {
 
     int counter = 0;
 
+    @Override
     public void run() {
       counter++;
     }
@@ -109,23 +107,30 @@ public class SchedulingSystemTest {
     }
 
     @Override
-    public String join(String delimeter) {
+    public List<String> join(String delimeter) {
       return null;
     }
   }
 
-  @Mock
+  @Injectable
   ScheduledRunnableRepository repository;
 
-  @InjectMocks
-  SingleThreadPoolSchedulingSystem system = new SingleThreadPoolSchedulingSystem();
+  @Tested
+  SingleThreadPoolSchedulingSystem system;
 
   @Test
   public void runit()
       throws InterruptedException {
     ScheduleTestObject runnable = new ScheduleTestObject();
     assertThat(runnable.counter).isEqualTo(0);
-    when(repository.iterator()).thenReturn(iterator(runnable));
+
+    new Expectations() {
+      {
+        repository.iterator();
+        result = iterator(runnable);
+      }
+    };
+
     assertThat(runnable.counter).isEqualTo(0);
     system.start();
     Thread.sleep(500);
