@@ -21,6 +21,9 @@ import java.util.concurrent.TimeUnit;
 import javax.annotation.PreDestroy;
 import javax.inject.Inject;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import net.stickycode.scheduled.Schedule;
 import net.stickycode.scheduled.ScheduledRunnable;
 import net.stickycode.scheduled.ScheduledRunnableRepository;
@@ -29,11 +32,8 @@ import net.stickycode.stereotype.StickyComponent;
 import net.stickycode.stereotype.configured.Configured;
 import net.stickycode.stereotype.configured.PostConfigured;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 @StickyComponent
-public class SingleThreadPoolSchedulingSystem 
+public class SingleThreadPoolSchedulingSystem
   implements BackgroundExecutor {
 
   private Logger log = LoggerFactory.getLogger(SingleThreadPoolSchedulingSystem.class);
@@ -45,19 +45,19 @@ public class SingleThreadPoolSchedulingSystem
 
   @Configured
   private Integer shutdownTimeoutInSeconds = 5;
-  
+
   @Configured
   private Integer maximumThreads = 3;
 
   @PostConfigured
   public void start() {
     executor = new StickyThreadPoolExcutor(maximumThreads);
-    
+
     log.info("starting schedules");
     for (ScheduledRunnable runnable : schedules) {
       Schedule s = runnable.getSchedule();
       if (s.isEnabled()) {
-        log.debug("scheduling {} {}",runnable, s); 
+        log.debug("scheduling {} {}",runnable, s);
         executor.scheduleAtFixedRate(runnable, s.getInitialDelay(), s.getPeriod(), s.getUnits());
       }
       else {
@@ -68,12 +68,12 @@ public class SingleThreadPoolSchedulingSystem
 
   @PreDestroy
   public void stop() {
-    log.info("stopping schedules");
     if (executor != null)
       stopping();
   }
 
   private void stopping() {
+    log.info("stopping schedules");
     try {
       executor.shutdown();
       if (!executor.awaitTermination(shutdownTimeoutInSeconds, TimeUnit.SECONDS))
