@@ -29,8 +29,8 @@ import net.stickycode.scheduled.ScheduledRunnable;
 import net.stickycode.scheduled.ScheduledRunnableRepository;
 import net.stickycode.scheduler.BackgroundExecutor;
 import net.stickycode.stereotype.StickyComponent;
+import net.stickycode.stereotype.configured.AfterConfiguration;
 import net.stickycode.stereotype.configured.Configured;
-import net.stickycode.stereotype.configured.PostConfigured;
 
 @StickyComponent
 public class SingleThreadPoolSchedulingSystem
@@ -49,7 +49,7 @@ public class SingleThreadPoolSchedulingSystem
   @Configured
   private Integer maximumThreads = 3;
 
-  @PostConfigured
+  @AfterConfiguration
   public void start() {
     executor = new StickyThreadPoolExcutor(maximumThreads);
 
