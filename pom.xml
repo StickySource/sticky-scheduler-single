@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Copyright (c) 2017 RedEngine Ltd, http://www.redengine.co.nz. All rights reserved. -->
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd" xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <parent>
     <groupId>net.stickycode.parent</groupId>
     <artifactId>sticky-parent-jar8</artifactId>
@@ -10,7 +10,7 @@
 
   <groupId>net.stickycode.scheduled</groupId>
   <artifactId>sticky-scheduler-single</artifactId>
-  <version>3.4-SNAPSHOT</version>
+  <version>3.4</version>
   <packaging>jar</packaging>
 
   <name>sticky-scheduler-single-3</name>
@@ -20,7 +20,7 @@
 
   <scm>
     <developerConnection>${git.url}</developerConnection>
-    <tag>HEAD</tag>
+    <tag>sticky-scheduler-single-3.4</tag>
   </scm>
 
   <dependencies>
@@ -33,7 +33,7 @@
     <dependency>
       <groupId>net.stickycode.configured</groupId>
       <artifactId>sticky-configured</artifactId>
-      <version>[6.2,7)</version>
+      <version>[6.8,7)</version>
       <scope>test</scope>
     </dependency>
 
@@ -45,7 +45,7 @@
     <dependency>
       <groupId>net.stickycode.stereotype</groupId>
       <artifactId>sticky-stereotype-configured</artifactId>
-      <version>[3.1,4)</version>
+      <version>[3.2,4)</version>
     </dependency>
     <dependency>
       <groupId>net.stickycode.scheduled</groupId>
