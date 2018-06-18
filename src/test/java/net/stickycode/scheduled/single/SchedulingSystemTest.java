@@ -125,6 +125,7 @@ public class SchedulingSystemTest {
     assertThat(runnable.counter).isEqualTo(0);
 
     new Expectations() {
+
       {
         repository.iterator();
         result = iterator(runnable);
@@ -132,7 +133,8 @@ public class SchedulingSystemTest {
     };
 
     assertThat(runnable.counter).isEqualTo(0);
-    system.start();
+    system.setupExecutor();
+    system.setupSchedules();
     Thread.sleep(500);
     assertThat(runnable.counter).isEqualTo(1);
     Thread.sleep(1000);
